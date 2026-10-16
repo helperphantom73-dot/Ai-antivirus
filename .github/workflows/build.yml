@@ -6,6 +6,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q AIBehavioralSecurity-v2.zip
+      - name: Apply updates
+        run: |
+          for f in $(ls update-*.zip 2>/dev/null | sort -V); do
+            echo "applying $f"
+            unzip -o -q "$f" -d AIBehavioralSecurity
+          done
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
       - uses: gradle/actions/setup-gradle@v4
